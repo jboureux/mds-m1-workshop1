@@ -24,6 +24,15 @@ Then open [http://localhost:3000](http://localhost:3000) with your browser to se
 TODO
 ```
 
+## Run in Development Environment
+
+### With Docker
+
+```bash
+cd docker-compose-workshop
+docker-compose -f docker-compose-dev.yml --env-file .env.dev up -d
+```
+
 ### Without Docker
 
 Clone the repository and run the following commands:

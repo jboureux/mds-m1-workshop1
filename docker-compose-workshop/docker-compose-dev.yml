@@ -5,8 +5,8 @@ networks:
 services:
   nextjs:
     build:
-      context: .
-      dockerfile: Dockerfile-nextjs
+      context: ..
+      dockerfile: docker-compose-workshop/Dockerfile-nextjs
     container_name: Front-End--NextJS
     ports:
       - "3000:3000"
@@ -18,33 +18,33 @@ services:
     networks:
       - workshop-retrometroid
 
-  nestjs:
-    build:
-      context: .
-      dockerfile: Dockerfile-nestjs
-    container_name: Back-End--NestJS
-    ports:
-      - "4000:4000"
-    volumes:
-      - .:/code
-    environment:
-      NODE_ENV: development
-      MONGO_URI: "${MONGO_URI}"
-    depends_on:
-      - mongo
-    networks:
-      - workshop-retrometroid
+#   nestjs:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile-nestjs
+#     container_name: Back-End--NestJS
+#     ports:
+#       - "4000:4000"
+#     volumes:
+#       - .:/code
+#     environment:
+#       NODE_ENV: development
+#       MONGO_URI: "${MONGO_URI}"
+#     depends_on:
+#       - mongo
+#     networks:
+#       - workshop-retrometroid
 
-  mongo:
-    image: mongo:latest
-    container_name: MongoDB
-    ports:
-      - "27017:27017"
-    volumes:
-      - mongo-data:/data/db
-    networks:
-      - workshop-retrometroid
+#   mongo:
+#     image: mongo:latest
+#     container_name: MongoDB
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo-data:/data/db
+#     networks:
+#       - workshop-retrometroid
 
-volumes:
-  mongo-data:
-    driver: local
+# volumes:
+#   mongo-data:
+#     driver: local

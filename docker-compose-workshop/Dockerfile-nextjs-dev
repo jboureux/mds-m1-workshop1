@@ -1,0 +1,20 @@
+FROM node:18-alpine
+
+WORKDIR /app
+
+# Copier les fichiers package.json et package-lock.json pour installer les dépendances
+COPY ../../package.json ../../package-lock.json ./
+RUN npm install
+
+# Copier le reste du code de l'application
+COPY . .
+
+# Définir les variables d'environnement
+ENV NODE_ENV development
+ENV NEXT_TELEMETRY_DISABLED=1
+
+# Exposer le port sur lequel l'application s'exécute
+EXPOSE 3000
+
+# Démarrer le serveur de développement Next.js
+CMD ["npm", "run", "dev"]

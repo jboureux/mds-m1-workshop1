@@ -31,14 +31,6 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                                 Produits
                             </Link>
                         </li>
-                        <li>
-                            <Link
-                                href="/admin/users"
-                                className="text-white hover:text-gray-300"
-                            >
-                                Utilisateurs
-                            </Link>
-                        </li>
                     </ul>
                 </div>
             </nav>

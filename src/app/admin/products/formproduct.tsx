@@ -1,5 +1,5 @@
 "use client";
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -7,6 +7,16 @@ import { Form, FormItem, FormMessage } from '@/components/ui/form';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+
 
 
 const formSchema = z.object({
@@ -20,12 +30,78 @@ const FormProduct = () => {
     resolver: zodResolver(formSchema),
   });
 
+  const [products, setProducts] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:3000/products');
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+fetchProducts();
+  }, []);
+
   const onSubmit = (data: any) => {
     console.log(data);
+    
   };
 
   return (
-    <div className="flex items-center justify-center">
+    <>
+    <Button className="bg-green-500 text-white px-4 py-2 rounded-md">Ajouter un produit</Button>
+    <div className='flex items-center justify-center w-3/4'>
+    
+      <Table>
+  <TableCaption>La liste de tous les produits</TableCaption>
+  <TableHeader>
+    <TableRow>
+      <TableHead className="w-[100px]">ID</TableHead>
+      <TableHead>Name</TableHead>
+      <TableHead>Price</TableHead>
+      <TableHead className="">Discount</TableHead>
+      <TableHead className="">Update</TableHead>
+      <TableHead className="">Delete</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    {products.map((product) => (
+      <TableRow key={product.id}>
+        <TableCell className="w-[100px]">{product.id}</TableCell>
+        <TableCell>{product.name}</TableCell>
+        <TableCell>{product.price}</TableCell>
+        <TableCell className="">{product.discount}</TableCell>
+        <TableCell className="">
+        <Button className="bg-blue-500 text-white px-4 py-2 rounded-md">Modifier</Button>
+        </TableCell>
+        <TableCell className="">
+        <Button className="bg-red-500 text-white px-4 py-2 rounded-md">Supprimer</Button>
+        </TableCell>
+      </TableRow>
+    ))}
+    <TableRow>
+      <TableCell className="w-[100px]">1</TableCell>
+      <TableCell>Apple</TableCell>
+      <TableCell>100</TableCell>
+      <TableCell className="">10</TableCell>
+      <TableCell className="">
+      <Button className="bg-blue-500 text-white px-4 py-2 rounded-md">Modifier</Button>
+      </TableCell>
+      <TableCell className="">
+      <Button className="bg-red-500 text-white px-4 py-2 rounded-md">Supprimer</Button>
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</Table>
+
+    </div>
+    {/* <div className="flex items-center justify-center">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 bg-white p-8 rounded-lg shadow-md">
           <FormItem className="space-y-4">
@@ -45,10 +121,11 @@ const FormProduct = () => {
               {form.formState.errors.discount && <FormMessage className="text-red-600">{form.formState.errors.discount.message}</FormMessage>}
             </div>
           </FormItem>
-          <Button type="submit" className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Envoyer</Button>
+          <Button type="submit" className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Save</Button>
         </form>
       </Form>
-    </div>
+    </div> */}
+    </>
   );
 
  

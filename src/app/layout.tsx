@@ -1,17 +1,23 @@
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import type { Metadata } from "next";
+import { Bebas_Neue } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
 
-const robotoRegular = localFont({
+export const robotoRegular = localFont({
     src: "./fonts/Roboto-Regular.ttf",
     variable: "--font-roboto-regular",
     weight: "100 900",
 });
+export const bebasNeue = Bebas_Neue({
+    subsets: ["latin"],
+    weight: "400",
+    variable: "--font-bebas-neue",
+});
 
 export const metadata: Metadata = {
     title: "Retrometroid",
-    description: "Vente de consoles rétro personnalisées",
+    description: "Vente de consol   es rétro personnalisées",
 };
 
 export default function RootLayout({

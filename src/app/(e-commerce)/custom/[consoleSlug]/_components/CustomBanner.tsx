@@ -1,4 +1,4 @@
-import { bebasNeue } from "@/app/layout";
+import { bebasNeue } from "@/app/fonts";
 
 interface CustomBannerProps {
     consoleName: string;

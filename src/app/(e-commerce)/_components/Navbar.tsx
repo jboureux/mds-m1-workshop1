@@ -1,4 +1,4 @@
-import { bebasNeue } from "@/app/layout";
+import { bebasNeue } from "@/app/fonts";
 import { navbar } from "@/config/navbar";
 
 import Image from "next/image";
@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const Navbar = async () => {
     return (
-        <nav className="bg-white p-4 sticky top-0 border-b border-gray-200">
+        <nav className="bg-white p-4 sticky top-0 border-b border-gray-200 z-50">
             <div className="container mx-auto grid grid-cols-[1fr_auto_1fr]">
                 <div>
                     <Link href={"/"} className="w-fit block">
@@ -24,7 +24,7 @@ const Navbar = async () => {
                         <li key={item.href}>
                             <Link
                                 href={item.href}
-                                className={`${bebasNeue.className} font-bebas-neue tracking-wide text-xl`}
+                                className={`${bebasNeue.className} tracking-wide text-xl`}
                             >
                                 {item.name}
                             </Link>

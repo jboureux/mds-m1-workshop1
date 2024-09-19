@@ -33,6 +33,10 @@ import {
   TableRow,
 } from "@/components/ui/table"
 
+import DialogAddItem from "./DialogAddItem"
+import DialogUpdateItem from "./DialogUpdateItem"
+import DialogDeleteItem from "./DialogDeleteItem"
+
 const data: Console[] = [
   {
     id: 1,
@@ -64,19 +68,19 @@ export type Console = {
 export const columns: ColumnDef<Console>[] = [
   {
     accessorKey: "id",
-    header: () => <div className="text-center">ID</div>,
+    header: () => <div className="text-center text-white">ID</div>,
     cell: ({ row }) => (
       <div className="capitalize text-center">{row.getValue("id")}</div>
     ),
   },
   {
     accessorKey: "name",
-    header: () => <div className="text-center">Name</div>,
+    header: () => <div className="text-center text-white">Name</div>,
     cell: ({ row }) => <div className="lowercase text-center">{row.getValue("name")}</div>,
   },
   {
     accessorKey: "price",
-    header: () => <div className="text-center">Price</div>,
+    header: () => <div className="text-center text-white">Price</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("price"))
 
@@ -91,7 +95,7 @@ export const columns: ColumnDef<Console>[] = [
   },
   {
     accessorKey: "discount",
-    header: () => <div className="text-center">Discount</div>,
+    header: () => <div className="text-center text-white">Discount</div>,
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("discount"))
 
@@ -108,7 +112,7 @@ export const columns: ColumnDef<Console>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      const console = row.original
+      // const console = row.original
 
       return (
         <DropdownMenu>
@@ -120,12 +124,19 @@ export const columns: ColumnDef<Console>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DialogUpdateItem>
+
             <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(console.id)} className=" focus:bg-green-600 focus:text-white"
-            >
-              Modifier
-            </DropdownMenuItem>
-            <DropdownMenuItem className="focus:bg-destructive focus:text-destructive-foreground">Supprimer</DropdownMenuItem>
+              className=" focus:bg-green-600 focus:text-white"
+              onSelect={(event)=> event.preventDefault()}
+            >Modifier  
+             </DropdownMenuItem>
+            </DialogUpdateItem>
+            <DialogDeleteItem>
+ <DropdownMenuItem className="focus:bg-destructive focus:text-destructive-foreground"
+            onSelect={(event)=> event.preventDefault()}
+            >Supprimer</DropdownMenuItem>
+            </DialogDeleteItem>
           </DropdownMenuContent>
         </DropdownMenu>
       )
@@ -162,19 +173,20 @@ export function DataTableProduct() {
   })
 
   return (
-    <div className="w-full px-14">
-      <div className="flex items-center py-4">
+    <div className="w-full px-14 text-white text-2xl">
+      <div className="flex items-center py-4 ">
         <Input
           placeholder="Rechercher par nom"
           value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
           onChange={(event) =>
             table.getColumn("name")?.setFilterValue(event.target.value)
           }
-          className="max-w-sm"
+          className="max-w-sm text-white"
         />
+   <DialogAddItem />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="ml-auto text-black">
               Colonne <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
@@ -201,7 +213,7 @@ export function DataTableProduct() {
       </div>
       <div className="rounded-md border">
         <Table>
-          <TableHeader className="rounded-md border bg-black">
+          <TableHeader className="rounded-md border bg-[#30336b]">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
@@ -250,11 +262,11 @@ export function DataTableProduct() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground">
+        <div className="flex-1 text-sm text-muted-foreground text-white">
           {table.getFilteredSelectedRowModel().rows.length} sur{" "}
           {table.getFilteredRowModel().rows.length} ligne(s) selectionné.
         </div>
-        <div className="space-x-2">
+        <div className="space-x-2 text-black">
           <Button
             variant="outline"
             size="sm"

@@ -4,8 +4,8 @@ import { DataTableProduct } from './DataTableProduct';
 
 function PageProduct() {
   return (
-    <div>
-      <h2 className="flex items-center justify-center my-12 text-4xl">Consoles 🎮​</h2>
+    <div className='bg-[#686de0] min-h-screen'>
+      <h2 className="flex items-center justify-center pt-9 text-4xl">Consoles 🎮​</h2>
     <DataTableProduct />
     </div>
   );

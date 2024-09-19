@@ -2,7 +2,7 @@ name: Docker Image CI
 
 on:
     push:
-        branches: ["master", "feat/docker-ci"]
+        branches: ["master"]
 
 jobs:
     build_and_publish:

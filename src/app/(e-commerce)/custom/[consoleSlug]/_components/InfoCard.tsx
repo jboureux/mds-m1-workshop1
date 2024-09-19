@@ -1,10 +1,10 @@
-import { bebasNeue } from "@/app/layout";
+import { bebasNeue } from "@/app/fonts";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const InfoCard = () => {
     const tabsTriggerClasses = `
-        text-xl ${bebasNeue.className} 
+        text-xl ${bebasNeue.className}
         data-[state=active]:shadow-none 
         data-[state=active]:border-none 
         text-black 
@@ -27,10 +27,10 @@ const InfoCard = () => {
         data-[state=active]:after:left-[10%]
     `;
     return (
-        <Card className="m-24">
-            <Tabs defaultValue="description">
-                <CardHeader>
-                    <TabsList className="bg-white justify-start">
+        <Tabs defaultValue="description">
+            <Card className="lg:m-24 m-8">
+                <CardHeader className="h-fit">
+                    <TabsList className="h-fit bg-white justify-start flex flex-wrap">
                         <TabsTrigger
                             value="description"
                             className={tabsTriggerClasses}
@@ -96,8 +96,8 @@ const InfoCard = () => {
                         </p>
                     </TabsContent>
                 </CardContent>
-            </Tabs>
-        </Card>
+            </Card>
+        </Tabs>
     );
 };
 

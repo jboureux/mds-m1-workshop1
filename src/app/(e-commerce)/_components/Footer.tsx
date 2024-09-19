@@ -1,4 +1,4 @@
-import { bebasNeue } from "@/app/layout";
+import { bebasNeue } from "@/app/fonts";
 import Icons from "@/components/icons/Icons";
 import { Mail } from "lucide-react";
 

@@ -1,22 +1,50 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { TriangleAlert } from "lucide-react";
+"use client";
 
-interface CustomConfiguratorProps {}
+import { bebasNeue } from "@/app/fonts";
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel";
+import { useConfigurator } from "../_providers/configurator-provider";
+import ConfiguratorCard from "./ConfiguratorCard";
+import ConsolePreview from "./ConsolePreview";
+import CustomConfiguratorWrapper from "./CustomConfiguratorWrapper";
 
-const CustomConfigurator = async (props: CustomConfiguratorProps) => {
+const CustomConfigurator = () => {
+    const { category, selectedOptions } = useConfigurator();
+    const views = ["FRONT", "SIDE", "BACK"];
     return (
-        <div className="flex justify-center bg-[#F8F8F8] py-12">
-            <Card className="w-fit mb-12">
-                <CardHeader>
-                    <CardTitle>Personnalisez votre console</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <div className="flex items-center gap-2 h-28">
-                        <TriangleAlert className="w-6 h-6" />
-                        <p>En cours de développement</p>
-                    </div>
-                </CardContent>
-            </Card>
+        <div className="flex flex-col items-center justify-center bg-[#F8F8F8] pb-12 h-fit lg:px-32">
+            <h1
+                className={`w-full text-center lg:text-left text-2xl tracking-wide my-6 ${bebasNeue.className}`}
+            >
+                Personnalisez votre console
+            </h1>
+            <div className="flex flex-col lg:flex-row justify-center lg:gap-16 gap-8 w-full h-fit">
+                <CustomConfiguratorWrapper>
+                    <Carousel className="w-full max-w-sm left-1/2 transform -translate-x-1/2 lg:left-0 lg:transform-none lg:translate-x-0">
+                        <CarouselContent>
+                            {views.map((view) => (
+                                <CarouselItem key={view}>
+                                    <div className="flex aspect-square items-center justify-center p-6">
+                                        <ConsolePreview
+                                            view={view}
+                                            console={category.slug}
+                                            selectedOptions={selectedOptions}
+                                        />
+                                    </div>
+                                </CarouselItem>
+                            ))}
+                        </CarouselContent>
+                        <CarouselPrevious className="lg:ml-0 ml-16" />
+                        <CarouselNext className="lg:mr-0 mr-16" />
+                    </Carousel>
+                </CustomConfiguratorWrapper>
+                <ConfiguratorCard />
+            </div>
         </div>
     );
 };

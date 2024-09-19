@@ -1,19 +1,8 @@
 import { ThemeProvider } from "@/components/theme/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import type { Metadata } from "next";
-import { Bebas_Neue } from "next/font/google";
-import localFont from "next/font/local";
+import { robotoRegular } from "./fonts";
 import "./globals.css";
-
-export const robotoRegular = localFont({
-    src: "./fonts/Roboto-Regular.ttf",
-    variable: "--font-roboto-regular",
-    weight: "100 900",
-});
-export const bebasNeue = Bebas_Neue({
-    subsets: ["latin"],
-    weight: "400",
-    variable: "--font-bebas-neue",
-});
 
 export const metadata: Metadata = {
     title: "Retrometroid",
@@ -29,7 +18,7 @@ export default function RootLayout({
         <html lang="fr" suppressHydrationWarning>
             <body className={`${robotoRegular.variable} antialiased`}>
                 <ThemeProvider defaultTheme="light" attribute="class">
-                    {children}
+                    <TooltipProvider>{children}</TooltipProvider>
                 </ThemeProvider>
             </body>
         </html>

@@ -17,6 +17,13 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import {
+  ColumnDef,
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table"
 
 
 const formSchema = z.object({
@@ -31,8 +38,7 @@ const FormProduct = () => {
   });
 
   const [products, setProducts] = useState([]);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -40,6 +46,7 @@ const FormProduct = () => {
         const response = await fetch('http://localhost:3000/products');
         const data = await response.json();
         setProducts(data);
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
@@ -48,10 +55,10 @@ const FormProduct = () => {
 fetchProducts();
   }, []);
 
-  const onSubmit = (data: any) => {
-    console.log(data);
-    
-  };
+  // formulaire pour post une donnée
+  // const onSubmit = (data: any) => {
+  //   console.log(data);
+  // };
 
   return (
     <>
@@ -85,6 +92,8 @@ fetchProducts();
         </TableCell>
       </TableRow>
     ))}
+
+    {/* Donnée en dur pour tester le design */}
     <TableRow>
       <TableCell className="w-[100px]">1</TableCell>
       <TableCell>Apple</TableCell>

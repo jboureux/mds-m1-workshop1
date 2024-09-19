@@ -17,20 +17,20 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                         </li>
                         <li>
                             <Link
-                                href="/admin/dashboard"
-                                className="text-white hover:text-gray-300"
-                            >
-                                Tableau de bord
-                            </Link>
-                        </li>
-                        <li>
-                            <Link
                                 href="/admin/products"
                                 className="text-white hover:text-gray-300"
                             >
                                 Produits
                             </Link>
                         </li>
+                        <li>
+                            <Link
+                                href="/admin/dashboard"
+                                className="text-white hover:text-gray-300"
+                            >
+                                Accessoires
+                            </Link>
+                        </li>                
                     </ul>
                 </div>
             </nav>

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { toast } from "sonner"
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -37,32 +38,11 @@ import DialogAddItem from "./DialogAddItem"
 import DialogUpdateItem from "./DialogUpdateItem"
 import DialogDeleteItem from "./DialogDeleteItem"
 
-const data: Console[] = [
-  {
-    id: 1,
-    name: "PlayStation 5",
-    price: 450,
-    discount: 50,
-  },
-  {
-    id: 2,
-    name: "Xbox Series X",
-    price: 500,
-    discount: 0,
-  },
-  {
-    id: 3,
-    name: "Nintendo Switch",
-    price: 300,
-    discount: 0,
-  },
-]
-
 export type Console = {
   id: number
   name: string
   price: number
-  discount: number
+  deviceDiscount: number
 }
 
 export const columns: ColumnDef<Console>[] = [
@@ -94,10 +74,10 @@ export const columns: ColumnDef<Console>[] = [
     },
   },
   {
-    accessorKey: "discount",
+    accessorKey: "deviceDiscount",
     header: () => <div className="text-center text-white">Discount</div>,
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("discount"))
+      const amount = parseFloat(row.getValue("deviceDiscount"))
 
       // Format the discount as a percentage
       const formatted = new Intl.NumberFormat("fr-FR", {
@@ -112,7 +92,7 @@ export const columns: ColumnDef<Console>[] = [
     id: "actions",
     enableHiding: false,
     cell: ({ row }) => {
-      // const console = row.original
+      const consoleId = row.getValue("id")
 
       return (
         <DropdownMenu>
@@ -124,7 +104,7 @@ export const columns: ColumnDef<Console>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DialogUpdateItem>
+            <DialogUpdateItem id={consoleId}>
 
             <DropdownMenuItem
               className=" focus:bg-green-600 focus:text-white"
@@ -145,13 +125,26 @@ export const columns: ColumnDef<Console>[] = [
 ]
 
 export function DataTableProduct() {
+  const [data, setData] = React.useState<Console[]>([])
   const [sorting, setSorting] = React.useState<SortingState>([])
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  )
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({})
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([])
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({})
   const [rowSelection, setRowSelection] = React.useState({})
+
+  React.useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/all`)
+        const result = await response.json()
+        setData(result)
+      } catch (error) {
+        toast.error('Error fetching data:', error)
+      }
+    }
+
+    fetchData()
+  }, [])
+  
 
   const table = useReactTable({
     data,
@@ -262,10 +255,7 @@ export function DataTableProduct() {
         </Table>
       </div>
       <div className="flex items-center justify-end space-x-2 py-4">
-        <div className="flex-1 text-sm text-muted-foreground text-white">
-          {table.getFilteredSelectedRowModel().rows.length} sur{" "}
-          {table.getFilteredRowModel().rows.length} ligne(s) selectionné.
-        </div>
+
         <div className="space-x-2 text-black">
           <Button
             variant="outline"

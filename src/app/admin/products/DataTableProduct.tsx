@@ -112,11 +112,13 @@ export const columns: ColumnDef<Console>[] = [
             >Modifier  
              </DropdownMenuItem>
             </DialogUpdateItem>
-            <DialogDeleteItem>
+
+            <DialogDeleteItem id={consoleId}>
  <DropdownMenuItem className="focus:bg-destructive focus:text-destructive-foreground"
             onSelect={(event)=> event.preventDefault()}
             >Supprimer</DropdownMenuItem>
             </DialogDeleteItem>
+
           </DropdownMenuContent>
         </DropdownMenu>
       )

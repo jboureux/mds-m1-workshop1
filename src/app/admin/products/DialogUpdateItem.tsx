@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 
 
 
-function DialogUpdateItem({children, id}: {children: React.ReactNode}) {
+function DialogUpdateItem({children, id}: {children: React.ReactNode, id: string}) {
   const [formData, setFormData] = useState({
     id: '',
     name: '',
@@ -23,7 +23,7 @@ function DialogUpdateItem({children, id}: {children: React.ReactNode}) {
     }));
   }, [id]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
     setFormData(prevState => ({
       ...prevState,
@@ -31,7 +31,7 @@ function DialogUpdateItem({children, id}: {children: React.ReactNode}) {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/category/${formData.id}`, {
@@ -54,7 +54,7 @@ function DialogUpdateItem({children, id}: {children: React.ReactNode}) {
         deviceDiscount: ''
       });
     } catch (error) {
-      toast.error(error.message || error);
+      toast.error((error as Error).message);
     }
   };
 

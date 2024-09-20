@@ -1,15 +1,8 @@
 "use client";
 
+import { Category } from "@/models/category.model";
+import { Variant } from "@/models/variant.model";
 import React, { createContext, useContext, useState } from "react";
-
-export interface ConfiguratorState {
-    id: number;
-    slug: string;
-    basePrice: number;
-    deviceReduction: number;
-    currency: string;
-    accessories: Accessories[];
-}
 
 export interface SelectedOption {
     accessoryId: string;
@@ -17,31 +10,9 @@ export interface SelectedOption {
     variant: Variant;
 }
 
-interface Accessories {
-    id: string;
-    name: string;
-    isBase: boolean;
-    description?: string;
-    variants: Variant[];
-}
-
-export interface Variant {
-    id: number;
-    hexcode?: string;
-    name: string;
-    default?: boolean;
-    images?: {
-        FRONT?: string;
-        BACK?: string;
-        SIDE?: string;
-    };
-    price?: number;
-    isTransparent?: boolean;
-}
-
 interface ConfiguratorContextType {
-    category: ConfiguratorState;
-    setCategory: React.Dispatch<React.SetStateAction<ConfiguratorState>>;
+    category: Category;
+    setCategory: React.Dispatch<React.SetStateAction<Category>>;
     selectedOptions: SelectedOption[];
     setSelectedOptions: React.Dispatch<React.SetStateAction<SelectedOption[]>>;
 }
@@ -63,13 +34,11 @@ export const useConfigurator = () => {
 export const ConfiguratorProvider: React.FC<{
     children: React.ReactNode;
     initValue: {
-        category: ConfiguratorState;
+        category: Category;
         selectedOptions: SelectedOption[];
     };
 }> = ({ children, initValue }) => {
-    const [category, setCategory] = useState<ConfiguratorState>(
-        initValue.category
-    );
+    const [category, setCategory] = useState<Category>(initValue.category);
     const [selectedOptions, setSelectedOptions] = useState<SelectedOption[]>(
         initValue.selectedOptions
     );

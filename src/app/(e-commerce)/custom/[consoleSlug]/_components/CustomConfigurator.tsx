@@ -15,7 +15,7 @@ import CustomConfiguratorWrapper from "./CustomConfiguratorWrapper";
 
 const CustomConfigurator = () => {
     const { category, selectedOptions } = useConfigurator();
-    const views = ["FRONT", "SIDE", "BACK"];
+    const views = ["frontViewUrl", "sideViewUrl", "backViewUrl"];
     return (
         <div className="flex flex-col items-center justify-center bg-[#F8F8F8] pb-12 h-fit lg:px-32">
             <h1
@@ -23,9 +23,9 @@ const CustomConfigurator = () => {
             >
                 Personnalisez votre console
             </h1>
-            <div className="flex flex-col lg:flex-row justify-center lg:gap-16 gap-8 w-full h-fit">
+            <div className="flex flex-col lg:flex-row justify-center items-center lg:gap-16 gap-8 w-full h-fit">
                 <CustomConfiguratorWrapper>
-                    <Carousel className="w-full max-w-sm left-1/2 transform -translate-x-1/2 lg:left-0 lg:transform-none lg:translate-x-0">
+                    <Carousel className="w-full max-w-sm">
                         <CarouselContent>
                             {views.map((view) => (
                                 <CarouselItem key={view}>

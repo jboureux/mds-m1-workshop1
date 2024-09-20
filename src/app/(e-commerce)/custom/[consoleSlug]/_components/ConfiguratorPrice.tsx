@@ -15,9 +15,9 @@ const ConfiguratorPrice = () => {
             option.accessoryId === "base" && option.variant.name === "Avec"
     );
     const totalPrice =
-        category.basePrice +
-        optionsPrice +
-        (hasDeviceReduction ? category.deviceReduction : 0);
+        category.price +
+        optionsPrice -
+        (hasDeviceReduction ? category.deviceDiscount : 0);
     return (
         <>
             <div className="flex flex-col items-center my-4">
@@ -25,15 +25,11 @@ const ConfiguratorPrice = () => {
                 <p
                     className={`text-6xl text-black ${bebasNeue.className} text-center`}
                 >
-                    {totalPrice.toFixed(2) + " " + category.currency}
+                    {totalPrice.toFixed(2) + " €"}
                 </p>
                 <div className="text-xs text-gray-500 text-center flex">
                     <HandCoins className="mr-2 w-4 h-4" />
-                    <span>
-                        {`Acompte: ${(totalPrice * 0.3).toFixed(2)} ${
-                            category.currency
-                        }`}
-                    </span>
+                    <span>{`Acompte: ${(totalPrice * 0.3).toFixed(2)} €`}</span>
                 </div>
             </div>
             <AddToCartButton />

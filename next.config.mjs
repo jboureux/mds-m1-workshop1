@@ -10,6 +10,21 @@ const nextConfig = {
         return config;
     },
     output: "standalone",
+    images: {
+        remotePatterns: [
+            {
+                protocol: "http",
+                hostname: "localhost",
+                port: "2424",
+                pathname: "/images/**",
+            },
+            {
+                protocol: process.env.NEXT_PUBLIC_API_URL.split("://")[0],
+                hostname: process.env.NEXT_PUBLIC_API_URL.split("://")[1],
+                pathname: "/images/**",
+            },
+        ],
+    },
 };
 
 export default nextConfig;

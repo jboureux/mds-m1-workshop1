@@ -2,10 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { ShoppingCart } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useConfigurator } from "../_providers/configurator-provider";
 
 interface AddToCartPayload {
-    category: number;
+    category_id: number;
     applyDiscount: boolean;
     options: {
         accessoryId: string;
@@ -15,9 +16,10 @@ interface AddToCartPayload {
 
 const AddToCartButton = () => {
     const { category, selectedOptions } = useConfigurator();
+    const router = useRouter();
     const handleAddToCart = () => {
         const payload: AddToCartPayload = {
-            category: category.id,
+            category_id: category.id,
             applyDiscount: selectedOptions.some(
                 (option) =>
                     option.accessoryId === "base" && option.variant.id === -1
@@ -29,7 +31,19 @@ const AddToCartButton = () => {
                     variantId: option.variant.id,
                 })),
         };
-        console.log(payload);
+        fetch(`${process.env.NEXT_PUBLIC_API_URL}/products/cart`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+        }).then((res) => {
+            if (res.ok) {
+                res.text().then((data) => {
+                    router.push(data);
+                });
+            }
+        });
     };
     return (
         <Button onClick={handleAddToCart} className="w-full">

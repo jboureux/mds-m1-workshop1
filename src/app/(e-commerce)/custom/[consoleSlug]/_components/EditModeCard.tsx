@@ -10,9 +10,10 @@ import {
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
+import { Variant } from "@/models/variant.model";
 import { ScrollTextIcon } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
-import { useConfigurator, Variant } from "../_providers/configurator-provider";
+import { useConfigurator } from "../_providers/configurator-provider";
 import ConfiguratorPrice from "./ConfiguratorPrice";
 
 interface EditModeCardProps {
@@ -48,7 +49,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                         </div>
                     </TabsTrigger>
                     {category.accessories.map((accessory) => (
-                        <TabsTrigger key={accessory.id} value={accessory.id}>
+                        <TabsTrigger key={accessory._id} value={accessory._id}>
                             {accessory.name}
                         </TabsTrigger>
                     ))}
@@ -103,13 +104,13 @@ const EditModeCard = (props: EditModeCardProps) => {
                                         : ""
                                 )}
                             >
-                                {`Avec (${category.deviceReduction} ${category.currency})`}
+                                {`Avec (${category.deviceDiscount} €)`}
                             </Button>
                         </div>
                     </div>
                 </TabsContent>
                 {category.accessories.map((accessory) => (
-                    <TabsContent key={accessory.id} value={accessory.id}>
+                    <TabsContent key={accessory._id} value={accessory._id}>
                         <div className="flex flex-col h-full">
                             {accessory.description ? (
                                 <p className="text-xs text-gray-500">
@@ -137,7 +138,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                                 }
                                                                 onClick={() =>
                                                                     handleOptionChange(
-                                                                        accessory.id,
+                                                                        accessory._id,
                                                                         variant
                                                                     )
                                                                 }
@@ -148,7 +149,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                                             option
                                                                         ) =>
                                                                             option.accessoryId ===
-                                                                                accessory.id &&
+                                                                                accessory._id &&
                                                                             option
                                                                                 .variant
                                                                                 .name ===
@@ -173,7 +174,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                             <p>
                                                                 {variant.name}
                                                                 {variant.price
-                                                                    ? ` (${variant.price} ${category.currency})`
+                                                                    ? ` (${variant.price} $€)`
                                                                     : ""}
                                                             </p>
                                                         </TooltipContent>
@@ -183,7 +184,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                         variant={"outline"}
                                                         onClick={() =>
                                                             handleOptionChange(
-                                                                accessory.id,
+                                                                accessory._id,
                                                                 variant
                                                             )
                                                         }
@@ -192,7 +193,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                             selectedOptions.some(
                                                                 (option) =>
                                                                     option.accessoryId ===
-                                                                        accessory.id &&
+                                                                        accessory._id &&
                                                                     option
                                                                         .variant
                                                                         .name ===
@@ -204,7 +205,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                     >
                                                         {variant.name}
                                                         {variant.price
-                                                            ? ` (${variant.price} ${category.currency})`
+                                                            ? ` (${variant.price} €)`
                                                             : ""}
                                                     </Button>
                                                 )}

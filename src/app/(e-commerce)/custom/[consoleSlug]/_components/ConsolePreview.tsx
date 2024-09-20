@@ -1,5 +1,5 @@
+import { Variant } from "@/models/variant.model";
 import Image from "next/image";
-import { Variant } from "../_providers/configurator-provider";
 
 interface ConsolePreviewProps {
     view: string;
@@ -12,39 +12,48 @@ interface ConsolePreviewProps {
 }
 
 const ConsolePreview = (props: ConsolePreviewProps) => {
-    const imageFolder = `/configurator-assets/${props.console}/${props.view}/`;
+    const imageUrl = `${process.env.NEXT_PUBLIC_API_URL}/images/`;
 
     const getBase = () => {
         const baseImages = props.selectedOptions.find(
             (option) => option.isBase
         );
-        return baseImages &&
-            baseImages.variant.images &&
-            props.view in baseImages.variant.images
-            ? baseImages.variant.images[
-                  props.view as keyof typeof baseImages.variant.images
-              ]
-            : undefined;
+        const baseImage =
+            baseImages && baseImages.variant.images
+                ? baseImages.variant.images.find((image) => props.view in image)
+                : undefined;
+
+        if (baseImage === undefined) {
+            return undefined;
+        }
+
+        return baseImage[props.view as keyof typeof baseImage];
     };
 
     const getLayers = (): string[] => {
         const noBaseLayers = props.selectedOptions.filter(
             (option) => option.variant.images && !option.isBase
         );
+
+        console.log(noBaseLayers);
+        console.log("ok");
+
         return noBaseLayers
-            .map((layer) =>
-                layer.variant.images
-                    ? layer.variant.images[
-                          props.view as keyof typeof layer.variant.images
-                      ]
-                    : undefined
-            )
+            .map((layer) => {
+                const images = layer.variant.images;
+                if (images) {
+                    const image = images.find((image) => props.view in image);
+                    console.log(image);
+                    return image && image[props.view as keyof typeof image];
+                }
+                return undefined;
+            })
             .filter((layer) => layer !== undefined);
     };
 
     if (getBase() === undefined)
         return (
-            <p className="text-red-500">
+            <p className="text-red-500 text-xs text-center px-12">
                 {`Aucune image trouvée pour ${props.console} ${props.view}`}
             </p>
         );
@@ -52,7 +61,7 @@ const ConsolePreview = (props: ConsolePreviewProps) => {
     return (
         <div className="grid grid-cols-1 grid-rows-1 w-fit h-fit">
             <Image
-                src={`${imageFolder}${getBase()}`}
+                src={`${imageUrl}${getBase()}`}
                 alt="Console Preview"
                 className="col-start-1 row-start-1 w-auto h-auto select-none"
                 width={300}
@@ -62,7 +71,7 @@ const ConsolePreview = (props: ConsolePreviewProps) => {
             {getLayers().map((layer) => (
                 <Image
                     key={layer as string}
-                    src={`${imageFolder}${layer}`}
+                    src={`${imageUrl}${layer}`}
                     alt="Console Preview"
                     width={300}
                     height={300}

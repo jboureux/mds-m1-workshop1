@@ -4,9 +4,7 @@ networks:
 
 services:
   nextjs:
-    build:
-      context: ..
-      dockerfile: docker-compose-workshop/Dockerfile-nextjs-prod
+    image: ghcr.io/jboureux/mds-m1-workshop1-front:latest
     container_name: NextJS
     ports:
       - "3000:3000"
@@ -16,7 +14,7 @@ services:
       - workshop-retrometroid
 
   backend-nestjs:
-    image: remimoul/backend-retrometroid:1.0.0
+    image: ghcr.io/jboureux/mds-m1-workshop1-back:latest
     ports:
       - "4000:4000"
     environment:

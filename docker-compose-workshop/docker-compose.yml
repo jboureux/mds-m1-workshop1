@@ -1,0 +1,48 @@
+version: "3.7"
+networks:
+  workshop-retrometroid: {}
+
+services:
+  nextjs:
+    build:
+      context: ..
+      dockerfile: docker-compose-workshop/Dockerfile-nextjs-prod
+    container_name: NextJS
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+    networks:
+      - workshop-retrometroid
+
+  backend-nestjs:
+    image: remimoul/backend-retrometroid:1.0.0
+    ports:
+      - "4000:4000"
+    environment:
+      - LOCAL_DB_URI=${LOCAL_DB_URI}
+      - PORT=${PORT}
+      - FRONT_URL_PROD=${FRONT_URL_PROD}
+      - FRONT_URL_DEV=${FRONT_URL_DEV}
+      - WOOCOMMERCE_URL=${WOOCOMMERCE_URL}
+      - WOOCOMMERCE_USER_KEY=${WOOCOMMERCE_USER_KEY}
+      - WOOCOMMERCE_SECRET_KEY=${WOOCOMMERCE_SECRET_KEY}
+    depends_on:
+      - mongo
+    networks:
+      - workshop-retrometroid
+
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+    ports:
+      - "27017:27017"
+    networks:
+      - workshop-retrometroid
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
+    driver: local

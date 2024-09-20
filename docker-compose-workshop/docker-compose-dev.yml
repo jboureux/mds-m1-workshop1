@@ -1,0 +1,55 @@
+version: "3.7"
+networks:
+  workshop-retrometroid: {}
+
+services:
+  nextjs:
+    build:
+      context: ..
+      dockerfile: docker-compose-workshop/Dockerfile-nextjs-dev
+    container_name: NextJS
+    ports:
+      - "3000:3000"
+    volumes:
+      - ../:/app
+      - /app/node_modules
+    environment:
+      HOSTNAME: "${HOSTNAME}"
+      ## Variable d'environnement pour forcer le polling sur les fichiers du projet pour le hot-reload
+      ## Fichier next.config.mjs à la racine du projet a été modifié pour prendre en compte cette variable
+      CHOKIDAR_USEPOLLING: "true"
+    networks:
+      - workshop-retrometroid
+
+      ## J'ajouterai cette partie dans le prochain commit pour le back-end
+
+#   nestjs:
+#     build:
+#       context: .
+#       dockerfile: Dockerfile-nestjs
+#     container_name: Back-End--NestJS
+#     ports:
+#       - "4000:4000"
+#     volumes:
+#       - .:/code
+#     environment:
+#       NODE_ENV: development
+#       MONGO_URI: "${MONGO_URI}"
+#     depends_on:
+#       - mongo
+#     networks:
+#       - workshop-retrometroid
+
+#   mongo:
+#     image: mongo:latest
+#     container_name: MongoDB
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - mongo-data:/data/db
+#     networks:
+#       - workshop-retrometroid
+
+# volumes:
+#   mongo-data:
+#     driver: local

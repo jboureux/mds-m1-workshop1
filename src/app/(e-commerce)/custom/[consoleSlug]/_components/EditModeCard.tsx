@@ -104,7 +104,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                         : ""
                                 )}
                             >
-                                {`Avec (${category.deviceDiscount} €)`}
+                                {`Avec (-${category.deviceDiscount} €)`}
                             </Button>
                         </div>
                     </div>
@@ -174,7 +174,7 @@ const EditModeCard = (props: EditModeCardProps) => {
                                                             <p>
                                                                 {variant.name}
                                                                 {variant.price
-                                                                    ? ` (${variant.price} $€)`
+                                                                    ? ` (${variant.price} €)`
                                                                     : ""}
                                                             </p>
                                                         </TooltipContent>

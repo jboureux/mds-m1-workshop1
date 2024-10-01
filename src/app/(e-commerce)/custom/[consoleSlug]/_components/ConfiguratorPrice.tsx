@@ -8,7 +8,7 @@ import AddToCartButton from "./AddToCartButton";
 const ConfiguratorPrice = () => {
     const { category, selectedOptions } = useConfigurator();
     const optionsPrice = selectedOptions.reduce((acc, option) => {
-        return acc + (option.variant.price ?? 0);
+        return acc + (option.variant?.price ?? 0);
     }, 0);
     const hasDeviceReduction = selectedOptions.some(
         (option) =>

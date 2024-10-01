@@ -32,7 +32,8 @@ const ConsolePreview = (props: ConsolePreviewProps) => {
 
     const getLayers = (): string[] => {
         const noBaseLayers = props.selectedOptions.filter(
-            (option) => option.variant.images && !option.isBase
+            (option) =>
+                option.variant && option.variant.images && !option.isBase
         );
 
         console.log(noBaseLayers);
@@ -40,8 +41,8 @@ const ConsolePreview = (props: ConsolePreviewProps) => {
 
         return noBaseLayers
             .map((layer) => {
-                const images = layer.variant.images;
-                if (images) {
+                const images = layer.variant.images ? layer.variant.images : [];
+                if (images && images.length > 0) {
                     const image = images.find((image) => props.view in image);
                     console.log(image);
                     return image && image[props.view as keyof typeof image];
@@ -67,6 +68,7 @@ const ConsolePreview = (props: ConsolePreviewProps) => {
                 width={300}
                 height={300}
                 draggable={false}
+                priority
             />
             {getLayers().map((layer) => (
                 <Image
@@ -77,6 +79,7 @@ const ConsolePreview = (props: ConsolePreviewProps) => {
                     height={300}
                     className="col-start-1 row-start-1 w-auto h-auto select-none"
                     draggable={false}
+                    priority
                 />
             ))}
         </div>

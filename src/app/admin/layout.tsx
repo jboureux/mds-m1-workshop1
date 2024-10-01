@@ -1,3 +1,4 @@
+import { Toaster } from "@/components/ui/sonner";
 import Link from "next/link";
 
 const AdminLayout = ({ children }: { children: React.ReactNode }) => {
@@ -30,11 +31,12 @@ const AdminLayout = ({ children }: { children: React.ReactNode }) => {
                             >
                                 Accessoires
                             </Link>
-                        </li>                
+                        </li>
                     </ul>
                 </div>
             </nav>
             {children}
+            <Toaster richColors theme="light" position="top-center" />
         </div>
     );
 };

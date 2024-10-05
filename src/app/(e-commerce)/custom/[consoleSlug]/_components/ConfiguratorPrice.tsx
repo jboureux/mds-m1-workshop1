@@ -3,7 +3,6 @@
 import { bebasNeue } from "@/app/fonts";
 import { HandCoins } from "lucide-react";
 import { useConfigurator } from "../_providers/configurator-provider";
-import AddToCartButton from "./AddToCartButton";
 
 const ConfiguratorPrice = () => {
     const { category, selectedOptions } = useConfigurator();
@@ -32,7 +31,6 @@ const ConfiguratorPrice = () => {
                     <span>{`Acompte: ${(totalPrice * 0.3).toFixed(2)} €`}</span>
                 </div>
             </div>
-            <AddToCartButton />
         </>
     );
 };

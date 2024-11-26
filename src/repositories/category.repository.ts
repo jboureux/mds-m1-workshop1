@@ -15,6 +15,21 @@ export async function getCategories(): Promise<Category[]> {
     return response.data;
 }
 
+export async function getCategoryBySlug(
+    slug: string
+): Promise<Category | undefined> {
+    const response = await fetchFromAPI<Category>(
+        `/category/slug/${slug}`,
+        "GET"
+    );
+
+    if (response.error) {
+        throw response.error;
+    }
+
+    return response.data;
+}
+
 export async function addCategory(
     category: Partial<Category>
 ): Promise<Category | undefined> {

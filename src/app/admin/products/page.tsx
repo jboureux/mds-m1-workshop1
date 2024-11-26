@@ -1,28 +1,23 @@
-import { Category } from "@/models/category.model";
-import { getCategories } from "@/repositories/category.repository";
+import AdminTitle from "@/components/typography/AdminTitle";
+import { CategoryDialogProvider } from "../../../hooks/category-dialog-provider";
 import { DataTableCategories } from "./_components/DataTableCategories";
 import DialogDeleteCategory from "./_components/DialogDeleteCategory";
 import DialogUpdateCategory from "./_components/DialogUpdateCategory";
-import { AdminCategoriesProvider } from "./_providers/admin-categories-provider";
-import { CategoryDialogProvider } from "./_providers/category-dialog-provider";
 
 async function PageProduct() {
-    const categories: Category[] = await getCategories();
+  return (
+    <div>
+      <div className="pt-9">
+        <AdminTitle text="Consoles 🎮​" />
+      </div>
 
-    return (
-        <div>
-            <h2 className="flex items-center justify-center pt-9 text-4xl">
-                Consoles 🎮​
-            </h2>
-            <AdminCategoriesProvider initValue={{ categories: categories }}>
-                <CategoryDialogProvider>
-                    <DataTableCategories />
-                    <DialogUpdateCategory />
-                    <DialogDeleteCategory />
-                </CategoryDialogProvider>
-            </AdminCategoriesProvider>
-        </div>
-    );
+      <CategoryDialogProvider>
+        <DataTableCategories />
+        <DialogUpdateCategory />
+        <DialogDeleteCategory />
+      </CategoryDialogProvider>
+    </div>
+  );
 }
 
 export default PageProduct;

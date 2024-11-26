@@ -16,7 +16,7 @@ function DialogCreateCategory() {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button className="bg-green-500 text-white px-4 py-2 ml-2 rounded-md">
+                <Button variant={"creation"} className="ml-2">
                     Ajouter un produit
                 </Button>
             </DialogTrigger>

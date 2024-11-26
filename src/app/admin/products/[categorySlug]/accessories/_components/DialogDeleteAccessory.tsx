@@ -8,34 +8,30 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import {
-  deleteCategory,
-  getCategories,
-} from "@/repositories/category.repository";
+import { useAccessoryDialog } from "@/hooks/accessory-dialog-provider";
+import { deleteAccessory } from "@/repositories/accessory.repository";
+import { useRouter } from "next/navigation";
 import { FormEvent } from "react";
 import { toast } from "sonner";
-import { useAdminCategories } from "../../../../hooks/admin-categories-provider";
-import { useCategoryDialog } from "../../../../hooks/category-dialog-provider";
 
-function DialogDeleteCategory() {
-  const dialogContext = useCategoryDialog();
-  const { setCategories } = useAdminCategories();
+function DialogDeleteAccessory() {
+  const dialogContext = useAccessoryDialog();
+  const router = useRouter();
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (dialogContext.category) {
+    if (dialogContext.accessory) {
       try {
-        await deleteCategory(dialogContext.category?.id);
+        await deleteAccessory(dialogContext.accessory?._id);
       } catch (error) {
         toast.error(`${error}`);
       }
-      toast.success("Console supprimée avec succès");
+      toast.success("Accessoire supprimé avec succès");
       dialogContext.setOpen(false);
-      const newData = await getCategories();
-      setCategories(newData);
+      router.refresh();
     } else {
       toast.error(
-        "Erreur, aucune console n'est associée a cette boite de dialogue"
+        "Erreur, aucun accessoire n'est associé a cette boite de dialogue"
       );
     }
   };
@@ -46,10 +42,10 @@ function DialogDeleteCategory() {
     >
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Supprimer une console</DialogTitle>
+          <DialogTitle>Supprimer un accessoire</DialogTitle>
           <DialogDescription>
-            Etes-vous sûr de vouloir supprimer la console{" "}
-            <strong>{dialogContext.category?.name}</strong> ?
+            {"Etes-vous sûr de vouloir supprimer l'accessoire "}
+            <strong>{dialogContext.accessory?.name}</strong> ?
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
@@ -58,10 +54,10 @@ function DialogDeleteCategory() {
             className="flex flex-row justify-end gap-4"
           >
             <Button variant={"secondary"}>
-              Retour a la liste des consoles
+              Retour a la liste des accessoire
             </Button>
             <Button type="submit" variant={"destructive"} autoFocus>
-              Supprimer la console
+              {"Supprimer l'accessoire"}
             </Button>
           </form>
         </DialogFooter>
@@ -70,4 +66,4 @@ function DialogDeleteCategory() {
   );
 }
 
-export default DialogDeleteCategory;
+export default DialogDeleteAccessory;

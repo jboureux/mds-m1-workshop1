@@ -5,6 +5,6 @@ export const navbar = [
     },
     {
         name: "Administration",
-        href: "/admin/dashboard",
+        href: "/admin/products",
     },
 ];

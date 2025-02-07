@@ -1,14 +1,21 @@
-import React from 'react';
-import { DataTableProduct } from './DataTableProduct';
-import { Toaster } from '@/components/ui/sonner';
+import AdminTitle from "@/components/typography/AdminTitle";
+import { CategoryDialogProvider } from "../../../hooks/category-dialog-provider";
+import { DataTableCategories } from "./_components/DataTableCategories";
+import DialogDeleteCategory from "./_components/DialogDeleteCategory";
+import DialogUpdateCategory from "./_components/DialogUpdateCategory";
 
-
-function PageProduct() {
+async function PageProduct() {
   return (
-    <div className='bg-[#686de0] min-h-screen'>
-      <h2 className="flex items-center justify-center pt-9 text-4xl">Consoles 🎮​</h2>
-    <DataTableProduct />
-    <Toaster richColors position='top-center'/>
+    <div>
+      <div className="pt-9">
+        <AdminTitle text="Consoles 🎮​" />
+      </div>
+
+      <CategoryDialogProvider>
+        <DataTableCategories />
+        <DialogUpdateCategory />
+        <DialogDeleteCategory />
+      </CategoryDialogProvider>
     </div>
   );
 }

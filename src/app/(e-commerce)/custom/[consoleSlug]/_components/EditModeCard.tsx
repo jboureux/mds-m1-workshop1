@@ -11,16 +11,9 @@ import {
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Variant } from "@/models/variant.model";
-import { ScrollTextIcon } from "lucide-react";
-import { Dispatch, SetStateAction } from "react";
 import { useConfigurator } from "../_providers/configurator-provider";
-import ConfiguratorPrice from "./ConfiguratorPrice";
 
-interface EditModeCardProps {
-    handleModeChange: Dispatch<SetStateAction<boolean>>;
-}
-
-const EditModeCard = (props: EditModeCardProps) => {
+const EditModeCard = () => {
     const { category, selectedOptions, setSelectedOptions } = useConfigurator();
     const handleOptionChange = (accessoryId: string, variant: Variant) => {
         if (
@@ -216,17 +209,6 @@ const EditModeCard = (props: EditModeCardProps) => {
                         </div>
                     </TabsContent>
                 ))}
-                <div>
-                    <Button
-                        variant={"outline"}
-                        onClick={() => props.handleModeChange(false)}
-                        className="w-full"
-                    >
-                        <ScrollTextIcon className="mr-2 w-4 h-4" />
-                        <span>Voir le récapitulatif</span>
-                    </Button>
-                    <ConfiguratorPrice />
-                </div>
             </CardContent>
         </Tabs>
     );
